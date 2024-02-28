@@ -8,24 +8,28 @@ const initialState = {
   inputs: {
     username: "",
     email: "",
+    age: "",
   },
   users: [
     {
       id: 1,
       username: "velopert",
       email: "public.velopert@gmail.com",
+      age: 20,
       active: true,
     },
     {
       id: 2,
       username: "tester",
       email: "tester@example.com",
+      age: 21,
       active: false,
     },
     {
       id: 3,
       username: "liz",
       email: "liz@example.com",
+      age: 30,
       active: false,
     },
   ],
@@ -62,10 +66,13 @@ function reducer(state, action) {
   }
 }
 
+export const UserDispatch = React.createContext(null);
+
 function App() {
-  const [{ username, email }, onChange, reset] = useInputs({
+  const [{ username, email, age }, onChange, reset] = useInputs({
     username: "",
     email: "",
+    age: "",
   });
   const [state, dispatch] = useReducer(reducer, initialState);
   const nextId = useRef(4);
@@ -79,40 +86,30 @@ function App() {
         id: nextId.current,
         username,
         email,
+        age,
       },
     });
     reset();
     nextId.current += 1;
-  }, [username, email, reset]);
-
-  const onToggle = useCallback((id) => {
-    dispatch({
-      type: "TOGGLE_USER",
-      id,
-    });
-  }, []);
-
-  const onRemove = useCallback((id) => {
-    dispatch({
-      type: "REMOVE_USER",
-      id,
-    });
-  }, []);
+  }, [username, email, age, reset]);
 
   return (
     <>
       <Counter />
       <br />
       <br />
-      <CreateUser
-        username={username}
-        email={email}
-        onChange={onChange}
-        onCreate={onCreate}
-      />
-      <br />
-      <UserList users={users} onToggle={onToggle} onRemove={onRemove} />
-      <div>활성사용자 수 : {activeCount}</div>
+      <UserDispatch.Provider value={dispatch}>
+        <CreateUser
+          username={username}
+          email={email}
+          age={age}
+          onChange={onChange}
+          onCreate={onCreate}
+        />
+        <br />
+        <UserList users={users} />
+        <div>활성사용자 수 : {activeCount}</div>
+      </UserDispatch.Provider>
     </>
   );
 }

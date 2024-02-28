@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-function CreateUser({ username, email, onChange, onCreate }) {
+function CreateUser({ username, email, age, onChange, onCreate }) {
   useEffect(() => {
     console.log("createUser 렌더링");
   });
@@ -18,6 +18,7 @@ function CreateUser({ username, email, onChange, onCreate }) {
         onChange={onChange}
         value={email}
       />
+      <input name="age" placeholder="나이" onChange={onChange} value={age} />
       <button onClick={onCreate}>등록</button>
     </>
   );
