@@ -2,6 +2,7 @@ import React, { useMemo, useReducer } from "react";
 import Counter from "./components/Counter";
 import UserList from "./components/UserList";
 import CreateUser from "./components/CreateUser";
+import produce from "immer";
 
 const initialState = {
   inputs: {
@@ -40,26 +41,23 @@ function countActiveUsers(users) {
 }
 
 function reducer(state, action) {
-  const { users } = state;
   const { user, id } = action;
+  console.log("리듀서 호출!", action);
   switch (action.type) {
     case "CREATE_USER":
-      return {
-        inputs: initialState.inputs,
-        users: users.concat(user),
-      };
+      return produce(state, (draft) => {
+        draft.users.push(user);
+      });
     case "TOGGLE_USER":
-      return {
-        ...state,
-        users: users.map((user) =>
-          user.id === id ? { ...user, active: !user.active } : user
-        ),
-      };
+      return produce(state, (draft) => {
+        const user = draft.users.find((user) => user.id === id);
+        user.active = !user.active;
+      });
     case "REMOVE_USER":
-      return {
-        ...state,
-        users: users.filter((user) => user.id !== id),
-      };
+      return produce(state, (draft) => {
+        const idx = draft.users.findIndex((user) => user.id === id);
+        draft.users.splice(idx, 1);
+      });
     default:
       return state;
   }
