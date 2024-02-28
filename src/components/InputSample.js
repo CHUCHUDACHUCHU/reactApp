@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 
 function InputSample() {
   const [inputs, setInputs] = useState({
-    name: "",
-    nickname: "",
+    name: '',
+    nickname: '',
   });
 
   const nameInput = useRef();
@@ -20,8 +20,8 @@ function InputSample() {
 
   const onReset = () => {
     setInputs({
-      name: "",
-      nickname: "",
+      name: '',
+      nickname: '',
     });
     nameInput.current.focus();
   };

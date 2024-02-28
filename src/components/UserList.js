@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { UserDispatch } from "../App";
+import React, { useContext, useEffect } from 'react';
+import { UserDispatch } from '../App';
 
 const User = React.memo(function User({ user }) {
   useEffect(() => {
-    console.log("User 렌더링");
+    console.log('User 렌더링');
   });
 
   const dispatch = useContext(UserDispatch);
@@ -12,12 +12,12 @@ const User = React.memo(function User({ user }) {
     <div>
       <b
         style={{
-          cursor: "pointer",
-          color: user.active ? "green" : "black",
+          cursor: 'pointer',
+          color: user.active ? 'green' : 'black',
         }}
         onClick={() => {
           dispatch({
-            type: "TOGGLE_USER",
+            type: 'TOGGLE_USER',
             id: user.id,
           });
         }}
@@ -30,7 +30,7 @@ const User = React.memo(function User({ user }) {
       <button
         onClick={() => {
           dispatch({
-            type: "REMOVE_USER",
+            type: 'REMOVE_USER',
             id: user.id,
           });
         }}
@@ -43,7 +43,7 @@ const User = React.memo(function User({ user }) {
 
 function UserList({ users }) {
   useEffect(() => {
-    console.log("UserList 렌더링");
+    console.log('UserList 렌더링');
   });
   return (
     <>
